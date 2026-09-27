@@ -122,6 +122,7 @@ Users can:
 * View returned content in a structured table
 
 ## Project Structure
+
 EdTech-Content-Data-Pipeline/
 │
 ├── src/                                  # Core source code
