@@ -121,7 +121,7 @@ Users can:
 * Select the number of results
 * View returned content in a structured table
 
-Project Structure
+## Project Structure
 EdTech-Content-Data-Pipeline/
 │
 ├── src/                                  # Core source code
@@ -169,7 +169,6 @@ EdTech-Content-Data-Pipeline/
 ├── .gitignore                            # Specifies files excluded from Git
 ├── requirements.txt                      # Python project dependencies
 └── README.md                             # Project documentation
-```
 
 ## Team
 
