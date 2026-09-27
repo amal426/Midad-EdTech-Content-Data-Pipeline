@@ -121,56 +121,54 @@ Users can:
 * Select the number of results
 * View returned content in a structured table
 
-## Project Structure
-
-```text
+Project Structure
 EdTech-Content-Data-Pipeline/
 │
-├── src/
-│   ├── database/
-│   ├── ingestion/
-│   └── transformation/
+├── src/                                  # Core source code
+│   ├── database/                         # Database-related operations
+│   ├── ingestion/                        # Data ingestion logic
+│   └── transformation/                   # Data transformation logic
 │
-├── data sources/
+├── data sources/                         # Source collection notebooks and raw data
 │   ├── notebooks/
-│   │   ├── API's_sources.ipynb
-│   │   └── RSS Feeds.ipynb
+│   │   ├── API's_sources.ipynb            # Collects data from API-based sources
+│   │   └── RSS Feeds.ipynb                # Collects data from RSS feeds
 │   │
 │   └── raw/
-│       ├── api_sources_1200.json
-│       └── rss_feeds_600.json
+│       ├── api_sources_1200.json          # Raw data collected from APIs
+│       └── rss_feeds_600.json             # Raw data collected from RSS feeds
 │
-├── exploration/
-│   ├── 04_data_exploration_bronze.ipynb
-│   ├── 07_data_exploration_silver.ipynb
-│   └── 10_data_exploration_gold.ipynb
+├── exploration/                          # Data exploration notebooks
+│   ├── 04_data_exploration_bronze.ipynb   # Explores Bronze layer data
+│   ├── 07_data_exploration_silver.ipynb   # Explores Silver layer data
+│   └── 10_data_exploration_gold.ipynb     # Explores Gold layer data
 │
-├── midad data pipline/
+├── midad data pipline/                   # Main Databricks data pipeline
 │   ├── setup/
-│   │   └── 01_create_schema.ipynb
+│   │   └── 01_create_schema.ipynb         # Creates the required database schemas
 │   │
 │   ├── bronze/
-│   │   ├── 02_ddl_bronze.ipynb
-│   │   └── 03_load_bronze.ipynb
+│   │   ├── 02_ddl_bronze.ipynb            # Creates Bronze layer tables
+│   │   └── 03_load_bronze.ipynb            # Loads raw data into Bronze
 │   │
 │   ├── silver/
-│   │   ├── 05_ddl_silver.ipynb
-│   │   └── 06_load_silver.ipynb
+│   │   ├── 05_ddl_silver.ipynb            # Creates Silver layer tables
+│   │   └── 06_load_silver.ipynb            # Cleans and loads data into Silver
 │   │
 │   ├── gold/
-│   │   └── 09_load_gold.ipynb
+│   │   └── 09_load_gold.ipynb              # Creates and loads the unified Gold dataset
 │   │
 │   └── data quality/
-│       ├── 08_data_quality_silver.ipynb
-│       └── 11_data_quality_gold.ipynb
+│       ├── 08_data_quality_silver.ipynb   # Validates Silver data quality
+│       └── 11_data_quality_gold.ipynb     # Validates Gold data quality
 │
-├── data/
-│   ├── gold_content_snapshot.parquet
-│   └── quality_report.json
+├── data/                                 # Data files used by the API
+│   ├── gold_content_snapshot.parquet      # Gold dataset snapshot used by the API
+│   └── quality_report.json                # Latest data quality validation report
 │
-├── .gitignore
-├── requirements.txt
-└── README.md
+├── .gitignore                            # Specifies files excluded from Git
+├── requirements.txt                      # Python project dependencies
+└── README.md                             # Project documentation
 ```
 
 ## Team
@@ -178,5 +176,5 @@ EdTech-Content-Data-Pipeline/
 Developed as part of the **SDA Data Engineering Bootcamp**.
 
 * Amal Al Dawsari 
-* Ewan Hamoh
+* Ewan Hamoh       @iiewxn
 * Renad Alghamdi
