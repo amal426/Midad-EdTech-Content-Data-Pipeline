@@ -125,6 +125,7 @@ Users can:
 
 ## Project Structure
 
+```text
 EdTech-Content-Data-Pipeline/
 │
 ├── src/                                  # Core source code
