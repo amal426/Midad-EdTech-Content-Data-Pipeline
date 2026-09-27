@@ -173,9 +173,7 @@ EdTech-Content-Data-Pipeline/
 ├── .gitignore                            # Specifies files excluded from Git
 ├── requirements.txt                      # Python project dependencies
 └── README.md                             # Project documentation
-
----
-
+```
 ## Team
 
 Developed as part of the **SDA Data Engineering Bootcamp**.
