@@ -43,6 +43,8 @@ The project focuses on content related to **Artificial Intelligence, Data, and C
 
 ## Architecture
 
+![Project Architecture](Architecture.png)
+
 ## Selected Sources
 
 The project uses several selected public source types:
@@ -128,44 +130,44 @@ EdTech-Content-Data-Pipeline/
 ├── src/                                  # Core source code
 │   ├── database/                         # Database-related operations
 │   ├── ingestion/                        # Data ingestion logic
-│   └── transformation/                   # Data transformation logic
+│   └── transformation/                  # Data transformation logic
 │
 ├── data sources/                         # Source collection notebooks and raw data
 │   ├── notebooks/
-│   │   ├── API's_sources.ipynb            # Collects data from API-based sources
-│   │   └── RSS Feeds.ipynb                # Collects data from RSS feeds
+│   │   ├── API's_sources.ipynb           # Collects data from API-based sources
+│   │   └── RSS Feeds.ipynb               # Collects data from RSS feeds
 │   │
 │   └── raw/
-│       ├── api_sources_1200.json          # Raw data collected from APIs
-│       └── rss_feeds_600.json             # Raw data collected from RSS feeds
+│       ├── api_sources_1200.json         # Raw data collected from APIs
+│       └── rss_feeds_600.json            # Raw data collected from RSS feeds
 │
 ├── exploration/                          # Data exploration notebooks
-│   ├── 04_data_exploration_bronze.ipynb   # Explores Bronze layer data
-│   ├── 07_data_exploration_silver.ipynb   # Explores Silver layer data
-│   └── 10_data_exploration_gold.ipynb     # Explores Gold layer data
+│   ├── 04_data_exploration_bronze.ipynb  # Explores Bronze layer data
+│   ├── 07_data_exploration_silver.ipynb  # Explores Silver layer data
+│   └── 10_data_exploration_gold.ipynb    # Explores Gold layer data
 │
-├── midad data pipline/                   # Main Databricks data pipeline
+├── midad data pipeline/                  # Main Databricks data pipeline
 │   ├── setup/
-│   │   └── 01_create_schema.ipynb         # Creates the required database schemas
+│   │   └── 01_create_schema.ipynb        # Creates the required database schemas
 │   │
 │   ├── bronze/
-│   │   ├── 02_ddl_bronze.ipynb            # Creates Bronze layer tables
-│   │   └── 03_load_bronze.ipynb            # Loads raw data into Bronze
+│   │   ├── 02_ddl_bronze.ipynb           # Creates Bronze layer tables
+│   │   └── 03_load_bronze.ipynb          # Loads raw data into Bronze
 │   │
 │   ├── silver/
-│   │   ├── 05_ddl_silver.ipynb            # Creates Silver layer tables
-│   │   └── 06_load_silver.ipynb            # Cleans and loads data into Silver
+│   │   ├── 05_ddl_silver.ipynb           # Creates Silver layer tables
+│   │   └── 06_load_silver.ipynb          # Cleans and loads data into Silver
 │   │
 │   ├── gold/
-│   │   └── 09_load_gold.ipynb              # Creates and loads the unified Gold dataset
+│   │   └── 09_load_gold.ipynb            # Creates and loads the unified Gold dataset
 │   │
 │   └── data quality/
-│       ├── 08_data_quality_silver.ipynb   # Validates Silver data quality
-│       └── 11_data_quality_gold.ipynb     # Validates Gold data quality
+│       ├── 08_data_quality_silver.ipynb  # Validates Silver data quality
+│       └── 11_data_quality_gold.ipynb    # Validates Gold data quality
 │
-├── data/                                 # Data files used by the API
-│   ├── gold_content_snapshot.parquet      # Gold dataset snapshot used by the API
-│   └── quality_report.json                # Latest data quality validation report
+├── data/                                 # Data files for the application
+│   ├── gold_content_snapshot.parquet     # Gold dataset snapshot used by the API
+│   └── quality_report.json               # Latest data quality validation report
 │
 ├── .gitignore                            # Specifies files excluded from Git
 ├── requirements.txt                      # Python project dependencies
@@ -178,4 +180,3 @@ Developed as part of the **SDA Data Engineering Bootcamp**.
 * Amal Al Dawsari — [@amal426](https://github.com/amal426)
 * Ewan Hamoh — [@iiewan](https://github.com/iiewan)
 * Renad Alghamdi — [@renad-ghazi](https://github.com/renad-ghazi)
-
