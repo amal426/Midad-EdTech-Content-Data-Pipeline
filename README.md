@@ -174,6 +174,8 @@ EdTech-Content-Data-Pipeline/
 ├── requirements.txt                      # Python project dependencies
 └── README.md                             # Project documentation
 
+---
+
 ## Team
 
 Developed as part of the **SDA Data Engineering Bootcamp**.
