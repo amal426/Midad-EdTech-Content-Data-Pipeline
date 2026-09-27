@@ -175,6 +175,6 @@ EdTech-Content-Data-Pipeline/
 
 Developed as part of the **SDA Data Engineering Bootcamp**.
 
-- [Amal Al Dawsari](GITHUB-USERNAME)
-- [Ewan Hamoh](@iiewxn)
+- [Amal Al Dawsari] 
+- Ewan Hamoh[@iiewan](https://github.com/iiewan)
 - [Renad Alghamdi](GITHUB-USERNAME)
