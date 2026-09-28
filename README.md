@@ -1,12 +1,14 @@
 <div align="center">
-  
+
 # Midad
- **EdTech Content Data Pipeline.**
+
+**EdTech Content Data Pipeline.**
 
 </div>
 
 <!-- Optional: add a short demo GIF here, e.g. -->
-<!-- <p align="center"><img src="docs/images/demo.gif" width="700" alt="SecureSight demo"></p> -->
+
+<!-- <p align="center"><img src="docs/images/demo.gif" width="700" alt="Midad demo"></p> -->
 
 ---
 
@@ -36,9 +38,9 @@ This data engineering project includes:
 7. **Dashboard & Web Application:** A **Streamlit** interface that provides a dashboard for exploring content distributions and a search interface for retrieving educational resources.
 8. **GitHub Integration:** Version-controlling project notebooks, code, and documentation using GitHub.
 
-🎯 This repository showcases skills in:
+This repository showcases skills in:
 
-* Azure Databricks & Delta Lake
+* Databricks & Delta Lake
 * PySpark & SQL
 * ETL Pipelines
 * Data Cleaning & Transformation
@@ -48,7 +50,6 @@ This data engineering project includes:
 * Streamlit & Data Visualization
 * Python
 * Git & GitHub
-
 
 ## Project Goal
 
@@ -155,7 +156,7 @@ The Streamlit application retrieves data and statistics through the **FastAPI RE
 
 ## Technologies & Tools
 
-* **Azure Databricks** — Developed and ran the data engineering pipeline.
+* **Databricks** — Developed and ran the data engineering pipeline.
 * **Delta Lake** — Stored the Bronze, Silver, and Gold layers.
 * **PySpark** — Processed and transformed the data.
 * **SQL** — Created tables, queried data, and performed data validation.
