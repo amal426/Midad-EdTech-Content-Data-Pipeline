@@ -36,6 +36,19 @@ This data engineering project includes:
 7. **Dashboard & Web Application:** A **Streamlit** interface that provides a dashboard for exploring content distributions and a search interface for retrieving educational resources.
 8. **GitHub Integration:** Version-controlling project notebooks, code, and documentation using GitHub.
 
+🎯 This repository showcases skills in:
+
+Azure Databricks & Delta Lake
+PySpark & SQL
+ETL Pipelines
+Data Cleaning & Transformation
+Data Quality & Validation
+Medallion Architecture
+FastAPI & REST APIs
+Streamlit & Data Visualization
+Python
+Git & GitHub
+
 
 ## Project Goal
 
