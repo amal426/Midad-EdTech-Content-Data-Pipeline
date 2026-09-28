@@ -1,6 +1,6 @@
-# EdTech Content Data Pipeline
+# Midad
 
-A scalable data pipeline designed to collect, clean, standardize, and organize educational content from multiple public sources into a unified dataset for search and discovery.
+EdTech Content Data Pipeline
 
 ## Table of Contents
 
