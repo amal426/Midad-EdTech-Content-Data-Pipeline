@@ -8,6 +8,8 @@
 <!-- Optional: add a short demo GIF here, e.g. -->
 <!-- <p align="center"><img src="docs/images/demo.gif" width="700" alt="SecureSight demo"></p> -->
 
+---
+
 ## Table of Contents
 
 * [Project Overview](#project-overview)
