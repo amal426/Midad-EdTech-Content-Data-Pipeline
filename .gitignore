@@ -1,8 +1,93 @@
-.venv/
+# ===========================
+# Python
+# ===========================
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
 *.pyc
+# ===========================
+# Virtual Environment
+# ===========================
+venv/
+.venv/
+env/
+ENV/
+*.egg
+
+# ===========================
+# Environment Variables
+# ===========================
 .env
+.env.local
+.env.*.local
+
+# ===========================
+# VS Code
+# ===========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# ===========================
+# Jupyter
+# ===========================
 .ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ===========================
+# Databricks
+# ===========================
+.databricks/
+*.dbc
+**/.databricks/
+
+# ===========================
+# Data Files
+# ===========================
 *.parquet
-data/*.csv
+*.csv
+*.xlsx
+*.xls
+!data/.gitkeep
+data/*.parquet 
+data/gold_content_snapshot/ 
+data/quality_report.json
+
+# ===========================
+# Logs
+# ===========================
+*.log
+logs/
+
+# ===========================
+# Testing
+# ===========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ===========================
+# Streamlit
+# ===========================
+.streamlit/secrets.toml
+
+# ===========================
+# OS
+# ===========================
 .DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===========================
+# IDE
+# ===========================
+.idea/
+*.swp
+*.swo
+*~
