@@ -1,7 +1,7 @@
 <div align="center">
   
 # Midad
-## **EdTech Content Data Pipeline.**
+ **EdTech Content Data Pipeline.**
 
 </div>
 
