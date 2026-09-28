@@ -176,7 +176,7 @@ The Streamlit application retrieves data and statistics through the **FastAPI RE
 ## Project Structure
 
 ```text
-EdTech-Content-Data-Pipeline/
+Midad-EdTech-Content-Data-Pipeline/
 │
 ├── images/                              # Project screenshots
 │   ├── midad_dashboard.png             # Dashboard screenshot
