@@ -182,11 +182,6 @@ Midad-EdTech-Content-Data-Pipeline/
 │   ├── midad_dashboard.png             # Dashboard screenshot
 │   └── midad_explorer.png              # Explorer interface screenshot
 │
-├── src/                                 # Main data engineering components
-│   ├── database/                        # Database-related components
-│   ├── ingestion/                       # Data ingestion components
-│   └── transformation/                 # Data transformation logic
-│
 ├── data sources/                        # Data collection sources
 │   ├── notebooks/                       # Data collection notebooks
 │   │   ├── API's_sources.ipynb          # Collects data from APIs
