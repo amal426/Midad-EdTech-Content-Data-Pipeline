@@ -2,36 +2,42 @@
 
 A scalable data pipeline designed to collect, clean, standardize, and organize educational content from multiple public sources into a unified dataset for search and discovery.
 
+## Table of Contents
+
+* [Project Overview](#project-overview)
+* [Project Goal](#project-goal)
+* [Architecture](#architecture)
+* [Selected Sources](#selected-sources)
+* [Medallion Layers](#medallion-layers)
+* [API Layer](#api-layer)
+* [Dashboard & User Interface](#dashboard--user-interface)
+* [Technologies & Tools](#technologies--tools)
+* [Project Structure](#project-structure)
+* [Team](#team)
+
 ## Project Overview
 
 This data engineering project includes:
 
 1. **Data Source Selection:** Integration of multiple public educational content sources covering **AI, Data, and Cloud Computing**.
-
 2. **Data Architecture:** Implementation of **Bronze, Silver, and Gold** layers using **Delta Lake** and the Medallion Architecture.
-
-3. **ETL Pipelines:** Data ingestion, cleaning, transformation, and standardization using **PySpark, SQL, dbt, and Databricks notebooks**.
-
-4. **Data Quality & Testing:** Validation of row counts, duplicate records, missing values, URLs, dates, and pipeline repeatability.
-
+3. **Data Processing:** Data ingestion, cleaning, transformation, and standardization using **PySpark, SQL, Python, and Databricks notebooks**.
+4. **Data Quality & Validation:** Validation of row counts, duplicate records, missing values, URLs, dates, and other data quality checks.
 5. **Unified Data Model:** Combining educational content from different sources into a standardized Gold dataset for search, filtering, and discovery.
-
-6. **API Integration:** A **FastAPI** backend that provides endpoints for content retrieval, search, filtering, pagination, and health checks.
-
-7. **Web Application:** A **Streamlit** interface that allows users to search, filter, and explore educational content through the API.
-
+6. **API Integration:** A **FastAPI** backend that provides endpoints for content retrieval, search, filtering, pagination, dashboard statistics, and health checks.
+7. **Dashboard & Web Application:** A **Streamlit** interface that provides a dashboard for exploring content distributions and a search interface for retrieving educational resources.
 8. **GitHub Integration:** Version-controlling project notebooks, code, and documentation using GitHub.
 
 🎯 This repository showcases skills in:
 
 * Azure Databricks & Delta Lake
 * PySpark & SQL
-* dbt & ETL/ELT Pipelines
+* ETL Pipelines
 * Data Cleaning & Transformation
-* Data Quality & Testing
+* Data Quality & Validation
 * Medallion Architecture
 * FastAPI & REST APIs
-* Streamlit
+* Streamlit & Data Visualization
 * Python
 * Git & GitHub
 
@@ -43,7 +49,9 @@ The project focuses on content related to **Artificial Intelligence, Data, and C
 
 ## Architecture
 
-![Project Architecture](Architecture.png)
+The pipeline follows a Medallion Architecture:
+
+**Data Sources → Bronze → Silver → Gold → FastAPI → Streamlit**
 
 ## Selected Sources
 
@@ -75,7 +83,7 @@ Cleans and standardizes the data by:
 
 ### Gold Layer
 
-Combines the cleaned data from all sources into a unified dataset ready for consumption.
+Combines the cleaned data from all sources into a unified dataset ready for consumption by the API and user interface.
 
 The Gold dataset includes:
 
@@ -95,85 +103,132 @@ The Gold dataset includes:
 
 ## API Layer
 
-The project includes a **FastAPI** backend that exposes the Gold data through REST API endpoints.
+The project includes a **FastAPI** backend that provides access to the curated Gold dataset.
 
 Current API functionality includes:
 
-* Health check
-* Retrieve educational content
-* Retrieve content by `content_id`
-* Search content
-* Filter content by topic and source
-* Date-based filtering
-* Pagination
-* Result limits
+* **Health Check** — verifies that the API is running and shows the number of loaded records.
+* **Content Retrieval** — retrieves educational resources with optional filters.
+* **Keyword Search** — searches resources using keywords.
+* **Content Filtering** — filters by content type, topic, and source.
+* **Content by ID** — retrieves a specific resource using its `content_id`.
+* **Pagination** — controls the number of returned records and their starting position.
+* **Filter Options** — provides available values for content type, topic, and source.
+* **Dashboard Statistics** — provides aggregated statistics for sources, content types, topics, and difficulty levels.
 
-The API loads the curated Gold dataset from a Parquet snapshot for content retrieval and search.
+The API loads the curated Gold dataset from a **Parquet snapshot** into memory when the application starts.
 
-## User Interface
+## Dashboard & User Interface
 
-A **Streamlit** web interface is used to interact with the API.
+The project includes a **Streamlit-based web interface** that provides users with a simple way to explore and interact with the curated educational content dataset.
 
-Users can:
+### Dashboard
 
-* Search educational content
-* Filter by content type
-* Filter by topic
-* Filter by source
-* Select the number of results
-* View returned content in a structured table
+The dashboard provides a visual overview of the collected educational resources, including:
+
+* **Content by Source:** Distribution of resources across different sources.
+* **Content by Type:** Distribution of resources by content type.
+* **Topics:** Distribution of resources across different topics.
+* **Difficulty Level:** Distribution of resources by difficulty level.
+
+The interface also displays the latest **Data Quality** status.
+
+### Midad Explorer
+
+The Midad Explorer allows users to:
+
+* Search educational resources using keywords.
+* Filter resources by **Content Type**, **Topic**, and **Source**.
+* Specify the number of results to display.
+* View retrieved resources in a structured data table.
+
+The Streamlit application retrieves data and statistics through the **FastAPI REST API**.
+
+## Technologies & Tools
+
+* **Azure Databricks** — Developed and ran the data engineering pipeline.
+* **Delta Lake** — Stored the Bronze, Silver, and Gold layers.
+* **PySpark** — Processed and transformed the data.
+* **SQL** — Created tables, queried data, and performed data validation.
+* **Python** — Used for data processing, API development, and application logic.
+* **FastAPI** — Built the REST API.
+* **Uvicorn** — Ran the FastAPI application locally.
+* **Pandas** — Loaded and processed the Gold dataset for the API.
+* **PyArrow** — Supported reading the Gold Parquet snapshot.
+* **Streamlit** — Built the web interface and dashboard.
+* **Requests** — Connected the Streamlit application to the FastAPI.
+* **Altair** — Created dashboard visualizations.
+* **JSON & CSV** — Used for storing collected raw data.
+* **Parquet** — Used for the Gold dataset snapshot consumed by the API.
+* **Git & GitHub** — Managed and version-controlled the project.
+* **Visual Studio Code** — Used to develop the API and Streamlit application.
 
 ## Project Structure
 
 ```text
 EdTech-Content-Data-Pipeline/
 │
-├── src/                                  # Core source code
-│   ├── database/                         # Database-related operations
-│   ├── ingestion/                        # Data ingestion logic
-│   └── transformation/                  # Data transformation logic
+├── images/                              # Project screenshots
+│   ├── midad_dashboard.png             # Dashboard screenshot
+│   └── midad_explorer.png              # Explorer interface screenshot
 │
-├── data sources/                         # Source collection notebooks and raw data
-│   ├── notebooks/
-│   │   ├── API's_sources.ipynb           # Collects data from API-based sources
-│   │   └── RSS Feeds.ipynb               # Collects data from RSS feeds
-│   │
-│   └── raw/
-│       ├── api_sources_1200.json         # Raw data collected from APIs
-│       └── rss_feeds_600.json            # Raw data collected from RSS feeds
+├── src/                                 # Main data engineering components
+│   ├── database/                        # Database-related components
+│   ├── ingestion/                       # Data ingestion components
+│   └── transformation/                 # Data transformation logic
 │
-├── exploration/                          # Data exploration notebooks
-│   ├── 04_data_exploration_bronze.ipynb  # Explores Bronze layer data
-│   ├── 07_data_exploration_silver.ipynb  # Explores Silver layer data
-│   └── 10_data_exploration_gold.ipynb    # Explores Gold layer data
+├── data sources/                        # Data collection sources
+│   ├── notebooks/                       # Data collection notebooks
+│   │   ├── API's_sources.ipynb          # Collects data from APIs
+│   │   └── RSS Feeds.ipynb              # Collects data from RSS feeds
+│   │
+│   └── raw/                             # Raw collected datasets
+│       ├── api_sources_1200.json        # Raw API data
+│       └── rss_feeds_600.json           # Raw RSS data
 │
-├── midad data pipeline/                  # Main Databricks data pipeline
-│   ├── setup/
-│   │   └── 01_create_schema.ipynb        # Creates the required database schemas
-│   │
-│   ├── bronze/
-│   │   ├── 02_ddl_bronze.ipynb           # Creates Bronze layer tables
-│   │   └── 03_load_bronze.ipynb          # Loads raw data into Bronze
-│   │
-│   ├── silver/
-│   │   ├── 05_ddl_silver.ipynb           # Creates Silver layer tables
-│   │   └── 06_load_silver.ipynb          # Cleans and loads data into Silver
-│   │
-│   ├── gold/
-│   │   └── 09_load_gold.ipynb            # Creates and loads the unified Gold dataset
-│   │
-│   └── data quality/
-│       ├── 08_data_quality_silver.ipynb  # Validates Silver data quality
-│       └── 11_data_quality_gold.ipynb    # Validates Gold data quality
+├── exploration/                         # Data exploration notebooks
+│   ├── 04_data_exploration_bronze.ipynb # Explores Bronze data
+│   ├── 07_data_exploration_silver.ipynb # Explores Silver data
+│   └── 10_data_exploration_gold.ipynb   # Explores Gold data
 │
-├── data/                                 # Data files for the application
-│   ├── gold_content_snapshot.parquet     # Gold dataset snapshot used by the API
-│   └── quality_report.json               # Latest data quality validation report
+├── midad data pipeline/                 # Main Databricks pipeline
+│   ├── setup/                           # Project setup
+│   │   └── 01_create_schema.ipynb       # Creates catalog and schemas
+│   │
+│   ├── bronze/                          # Bronze layer
+│   │   ├── 02_ddl_bronze.ipynb          # Creates Bronze tables
+│   │   └── 03_load_bronze.ipynb         # Loads raw data into Bronze
+│   │
+│   ├── silver/                          # Silver layer
+│   │   ├── 05_ddl_silver.ipynb          # Creates Silver tables
+│   │   └── 06_load_silver.ipynb         # Cleans and loads Silver data
+│   │
+│   ├── gold/                            # Gold layer
+│   │   └── 09_load_gold.ipynb           # Creates the final Gold dataset
+│   │
+│   └── data quality/                    # Data quality checks
+│       ├── 08_data_quality_silver.ipynb # Validates Silver data
+│       └── 11_data_quality_gold.ipynb   # Validates Gold data
 │
-├── .gitignore                            # Specifies files excluded from Git
-├── requirements.txt                      # Python project dependencies
-└── README.md                             # Project documentation
+├── api/                                 # FastAPI backend
+│   ├── main.py                          # API endpoints and logic
+│   └── requirements.txt                 # API dependencies
+│
+├── streamlit_app/                       # Streamlit web application
+│   ├── app.py                           # Dashboard and Midad Explorer
+│   └── requirements.txt                 # Streamlit dependencies
+│
+├── data/                                # API and application data
+│   ├── gold_content_snapshot.parquet    # Gold dataset snapshot
+│   └── quality_report.json              # Data quality results
+│
+├── .gitignore                           # Files excluded from GitHub
+├── README.md                            # Project documentation
+└── requirements.txt                     # Project dependencies
 ```
+
+---
+
 ## Team
 
 Developed as part of the **SDA Data Engineering Bootcamp**.
