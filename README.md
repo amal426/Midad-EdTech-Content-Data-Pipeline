@@ -38,16 +38,16 @@ This data engineering project includes:
 
 🎯 This repository showcases skills in:
 
-Azure Databricks & Delta Lake
-PySpark & SQL
-ETL Pipelines
-Data Cleaning & Transformation
-Data Quality & Validation
-Medallion Architecture
-FastAPI & REST APIs
-Streamlit & Data Visualization
-Python
-Git & GitHub
+* Azure Databricks & Delta Lake
+* PySpark & SQL
+* ETL Pipelines
+* Data Cleaning & Transformation
+* Data Quality & Validation
+* Medallion Architecture
+* FastAPI & REST APIs
+* Streamlit & Data Visualization
+* Python
+* Git & GitHub
 
 
 ## Project Goal
