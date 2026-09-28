@@ -58,6 +58,7 @@ The goal of this project is to build a **repeatable and structured data pipeline
 The project focuses on content related to **Artificial Intelligence, Data, and Cloud Computing**, making it easier to **search, filter, and discover relevant educational resources** through an API and user interface.
 
 ## Architecture
+<img width="1518" height="750" alt="Image" src="https://github.com/user-attachments/assets/5f91a493-aef6-4dff-9ed6-7c07f5c67dac" />
 
 The pipeline follows a Medallion Architecture:
 
