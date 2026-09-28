@@ -1,1 +1,18 @@
+# ===========================
+# FastAPI Backend
+# ===========================
+fastapi
+uvicorn[standard]
+pydantic
 
+# ===========================
+# Streamlit Frontend
+# ===========================
+streamlit
+requests
+
+# ===========================
+# Data Processing
+# ===========================
+pandas
+pyarrow
