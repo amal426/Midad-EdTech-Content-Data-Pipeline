@@ -9,6 +9,7 @@ import altair as alt
 API_BASE = "http://localhost:8000"
 
 st.set_page_config(page_title="Midad Explorer", layout="wide")
+
 # ==========================================
 # 1. Midad brand (top of page) — Arabic, vivid green gradient, custom font
 # ==========================================
@@ -295,3 +296,195 @@ if st.button("Search"):
             st.error(f"API error: {response.status_code}")
     except requests.exceptions.ConnectionError:
         st.error("⚠️ Could not connect to FastAPI. Make sure uvicorn is running.")
+
+# ============================================
+# 🗺️ LEARNING PATH (bottom of the page)
+# ============================================
+
+st.markdown("---")
+st.markdown("##  Your Learning Path")
+st.caption(
+    "Pick a topic, level and keyword — we build your personalized learning journey from all sources."
+)
+
+# --- Inputs (Row 1: topic, level, keyword) ---
+col1, col2, col3 = st.columns([2, 2, 3])
+
+with col1:
+    lp_topic = st.selectbox(
+        "Topic",
+        ["", "AI", "Data", "Cloud"],
+        format_func=lambda x: x if x else "— select —",
+        key="lp_topic",
+    )
+
+with col2:
+    lp_level = st.selectbox(
+        "Difficulty level",
+        ["", "All", "Beginner", "Intermediate", "Advanced"],
+        format_func=lambda x: x if x else "— select —",
+        key="lp_level",
+    )
+
+with col3:
+    lp_keyword = st.text_input(
+        "Keyword (optional)",
+        placeholder="e.g. sql, python, rag, kubernetes",
+        key="lp_keyword",
+    )
+
+# --- Row 2: number input + helper text ---
+col_a, col_b = st.columns([1, 4])
+
+with col_a:
+    lp_per_level = st.number_input(
+        "Max resources",
+        min_value=1,
+        max_value=50,
+        value=5,
+        step=1,
+        key="lp_per_level",
+    )
+
+with col_b:
+    st.markdown(
+        "<div style='padding-top: 32px; color: #888; font-size: 0.9em;'>"
+        "Number of resources to display. Range: <b>1 to 50</b>."
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+# --- Button ---
+if st.button(" Build My Learning Path", key="lp_button", type="primary"):
+    if not lp_topic:
+        st.warning("⚠️ Please select a topic.")
+    elif not lp_level and not lp_keyword.strip():
+        st.warning("⚠️ Please select a difficulty level, or type a keyword.")
+    else:
+        params = {
+            "topic": lp_topic,
+            "level": lp_level or "All",
+            "per_level": lp_per_level,
+        }
+        if lp_keyword.strip():
+            params["keyword"] = lp_keyword.strip()
+
+        try:
+            resp = requests.get(f"{API_BASE}/learning-path", params=params, timeout=15)
+
+            if resp.status_code == 200:
+                data = resp.json()
+
+                if data["total"] == 0:
+                    st.warning(
+                        f"No resources found for **{lp_topic}**"
+                        + (f" at **{lp_level}** level" if lp_level != "All" else "")
+                        + (f" with keyword `{lp_keyword}`" if lp_keyword else "")
+                        + "."
+                    )
+                else:
+                    # --- Success message (4 cases) ---
+                    if lp_keyword.strip():
+                        if lp_level == "All":
+                            st.success(
+                                f"Found **{data['total']}** resources matching "
+                                f"`{lp_keyword}` in **{lp_topic}** (across all levels)."
+                            )
+                        else:
+                            st.success(
+                                f"Found **{data['total']}** resources matching "
+                                f"`{lp_keyword}` in **{lp_topic}** · **{lp_level}**."
+                            )
+                    else:
+                        if lp_level == "All":
+                            st.success(
+                                f"Found **{data['total']}** resources for "
+                                f"**{lp_topic}** (across all levels)."
+                            )
+                        else:
+                            st.success(
+                                f"Found **{data['total']}** resources for "
+                                f"**{lp_topic}** · **{lp_level}**."
+                            )
+
+                    level_icon = {
+                        "Beginner": "🟢",
+                        "Intermediate": "🟡",
+                        "Advanced": "🔴",
+                    }
+
+                    def source_icon(src: str) -> str:
+                        s = str(src).lower()
+                        if "blog" in s:
+                            return "📰"
+                        if "newsletter" in s:
+                            return "📧"
+                        if "youtube" in s:
+                            return "🎥"
+                        if "github" in s:
+                            return "🐙"
+                        if "coursera" in s:
+                            return "📘"
+                        if "microsoft" in s:
+                            return "🪟"
+                        return "📄"
+
+                    # --- Render results (all expanders collapsed) ---
+                    for idx, r in enumerate(data["results"]):
+                        inf_level = r.get("inferred_level", data["level"])
+                        icon = level_icon.get(inf_level, "⚪")
+                        src_ic = source_icon(r.get("source", ""))
+                        title = r.get("title", "Untitled")
+
+                        with st.expander(f"{idx + 1}. {icon} {src_ic} {title}"):
+                            c1, c2 = st.columns([3, 1])
+                            with c1:
+                                st.write(f"**Source:** {r.get('source', 'N/A')}")
+                                st.write(f"**Topic:** {r.get('topic', 'N/A')}")
+                                st.write(f"**Level:** {inf_level}")
+                                st.write(f"**Category:** {r.get('category', 'N/A')}")
+                                st.write(f"**Language:** {r.get('language', 'N/A')}")
+                                if r.get("list_of_keywords"):
+                                    st.write(f"**Keywords:** {r['list_of_keywords']}")
+                            with c2:
+                                pub = str(r.get("published_date", ""))[:10]
+                                if pub:
+                                    st.write(f"**📅** {pub}")
+                                if r.get("url"):
+                                    st.markdown(f"[🔗 Open]({r['url']})")
+
+                            if r.get("description"):
+                                desc = str(r["description"])
+                                st.markdown("---")
+                                st.write(desc[:600] + ("..." if len(desc) > 600 else ""))
+
+                    # --- Download as Markdown ---
+                    lines = [f"# Learning Path: {lp_topic} · {lp_level}"]
+                    if lp_keyword.strip():
+                        lines.append(f"**Keyword:** `{lp_keyword}`")
+                    lines.append(f"\n**Total matches:** {data['total']}\n")
+
+                    for r in data["results"]:
+                        lv = r.get("inferred_level", "")
+                        lines.append(
+                            f"- **{r.get('title', 'Untitled')}** — _{r.get('source', '')}_ · {lv}"
+                        )
+                        if r.get("url"):
+                            lines.append(f"  {r['url']}")
+
+                    report_md = "\n".join(lines)
+                    st.download_button(
+                        "📥 Download as Markdown",
+                        data=report_md,
+                        file_name=f"learning_path_{lp_topic}_{lp_level}.md",
+                        mime="text/markdown",
+                        key="lp_download",
+                    )
+
+            elif resp.status_code == 404:
+                st.warning(f"No content found for topic '{lp_topic}'.")
+            else:
+                st.error(f"API error: {resp.status_code}")
+
+        except requests.exceptions.ConnectionError:
+            st.error("⚠️ Could not connect to FastAPI. Make sure uvicorn is running.")

@@ -163,3 +163,127 @@ def get_dashboard_stats():
         "topic_counts": topic_counts,
         "difficulty_counts": difficulty_counts,
     }
+
+# ============================================
+# Helper: infer difficulty level for sources
+# that don't provide one (blogs, newsletters)
+# ============================================
+
+BEGINNER_KEYWORDS = [
+    "introduction", "intro", "beginner", "beginners", "basics",
+    "getting started", "fundamentals", "what is", "what are",
+    "tutorial", "101", "crash course", "first steps", "overview",
+    "guide", "explained", "learn", "start", "simple", "easy",
+    "walkthrough", "step by step", "for dummies",
+]
+
+ADVANCED_KEYWORDS = [
+    "advanced", "deep dive", "expert", "production", "scaling",
+    "optimization", "optimizing", "architecture", "internals",
+    "under the hood", "fine-tuning", "research", "paper",
+    "benchmark", "best practices", "design patterns",
+    "performance", "distributed", "internals", "profiling",
+    "high-level", "cutting edge", "state of the art",
+]
+
+
+def infer_level(row) -> str:
+    """
+    Infer the difficulty level of a content row.
+    - If difficulty_level is already set (Coursera/GitHub/YouTube), keep it.
+    - Otherwise (blogs/newsletters = null), infer from title + keywords + description.
+    - Fallback to "Intermediate" if no strong signal.
+    """
+    existing = row.get("difficulty_level")
+    if pd.notna(existing):
+        val = str(existing).strip()
+        if val and val.lower() not in ("nan", "none", "null"):
+            return val
+
+    # Build searchable text
+    parts = [
+        str(row.get("title") or ""),
+        str(row.get("list_of_keywords") or ""),
+        str(row.get("category") or ""),
+        str(row.get("description") or "")[:400],
+    ]
+    text = " ".join(parts).lower()
+
+    b_hits = sum(1 for kw in BEGINNER_KEYWORDS if kw in text)
+    a_hits = sum(1 for kw in ADVANCED_KEYWORDS if kw in text)
+
+    if a_hits > b_hits:
+        return "Advanced"
+    if b_hits > a_hits:
+        return "Beginner"
+    return "Intermediate"
+@app.get("/learning-path")
+def get_learning_path(
+    topic: str = Query(..., description="Topic: AI, Data, or Cloud"),
+    level: str = Query(..., description="Difficulty: Beginner, Intermediate, Advanced, or All"),
+    keyword: str | None = Query(None, description="Optional keyword filter"),
+    per_level: int = Query(5, le=50),
+):
+    """
+    Build a targeted learning path.
+    - level='All' → no level filter (across all levels).
+    - Otherwise → strict level filter using inferred levels.
+    - keyword is applied on top of the level filter.
+    """
+    df = gold_df[gold_df["topic"] == topic].copy()
+
+    if df.empty:
+        raise HTTPException(status_code=404, detail=f"No content found for topic '{topic}'")
+
+    # 1. Infer level for every row
+    df["_level"] = df.apply(infer_level, axis=1)
+
+    # 2. Level filter — skipped when level == "All"
+    if level != "All":
+        df = df[df["_level"] == level].copy()
+
+    if df.empty:
+        return {
+            "topic": topic, "level": level, "keyword": keyword,
+            "total": 0, "results": [],
+        }
+
+    # 3. Keyword filter (optional)
+    if keyword and keyword.strip():
+        kw = keyword.strip().lower()
+        mask = (
+            df["list_of_keywords"].astype(str).str.lower().str.contains(kw, na=False)
+            | df["title"].astype(str).str.lower().str.contains(kw, na=False)
+            | df["description"].astype(str).str.lower().str.contains(kw, na=False)
+        )
+        df = df[mask].copy()
+
+    if df.empty:
+        return {
+            "topic": topic, "level": level, "keyword": keyword,
+            "total": 0, "results": [],
+        }
+
+    # 4. Sort
+    if "published_date" in df.columns:
+        df["published_date"] = pd.to_datetime(df["published_date"], errors="coerce")
+    df["_desc_len"] = df["description"].astype(str).str.len()
+    df = df.sort_values(
+        by=["published_date", "_desc_len"],
+        ascending=[False, False],
+        na_position="last",
+    )
+
+    top = df.head(per_level).copy()
+    top["inferred_level"] = top["_level"]
+    top = top.drop(columns=["_level", "_desc_len"], errors="ignore")
+
+    records = df_to_json_records(top)
+
+    return {
+        "topic": topic,
+        "level": level,
+        "keyword": keyword,
+        "total": len(df),
+        "results": records,
+    }
