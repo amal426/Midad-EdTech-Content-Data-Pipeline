@@ -60,16 +60,16 @@ The project focuses on content related to **Artificial Intelligence, Data, and C
 ## Architecture
 <img width="1518" height="750" alt="Image" src="https://github.com/user-attachments/assets/5f91a493-aef6-4dff-9ed6-7c07f5c67dac" />
 
-Component	Purpose
-Sources	Coursera, Microsoft Learn, GitHub, YouTube, Blogs, and Newsletters.
-Bronze Layer	Stores raw data collected from APIs and RSS feeds.
-Silver Layer	Cleans, standardizes, validates, tags, and deduplicates data.
-Gold Layer	Unifies and organizes data into a curated dataset.
-Delta Lake	Stores and manages the Bronze, Silver, and Gold layers.
-FastAPI	Provides API endpoints for search, filtering, and data retrieval.
-Streamlit	Provides the dashboard and Midad Explorer interface.
-Midad	EdTech Content Data Pipeline for discovering educational resources.
-
+| Component | Purpose |
+|---|---|
+| **Sources** | Coursera, Microsoft Learn, GitHub, YouTube, Blogs, and Newsletters. |
+| **Bronze Layer** | Stores raw data collected from APIs and RSS feeds. |
+| **Silver Layer** | Cleans, standardizes, validates, tags, and deduplicates data. |
+| **Gold Layer** | Unifies and organizes data into a curated dataset. |
+| **Delta Lake** | Stores and manages the Bronze, Silver, and Gold layers. |
+| **FastAPI** | Provides API endpoints for search, filtering, and data retrieval. |
+| **Streamlit** | Provides the dashboard and Midad Explorer interface. |
+| **Midad** | EdTech Content Data Pipeline for discovering educational resources. |
 The pipeline follows a Medallion Architecture:
 
 **Data Sources → Bronze → Silver → Gold → FastAPI → Streamlit**
