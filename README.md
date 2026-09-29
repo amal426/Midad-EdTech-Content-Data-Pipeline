@@ -70,6 +70,7 @@ The project focuses on content related to **Artificial Intelligence, Data, and C
 | **FastAPI** | Provides API endpoints for search, filtering, and data retrieval. |
 | **Streamlit** | Provides the dashboard and Midad Explorer interface. |
 | **Midad** | EdTech Content Data Pipeline for discovering educational resources. |
+
 The pipeline follows a Medallion Architecture:
 
 **Data Sources → Bronze → Silver → Gold → FastAPI → Streamlit**
